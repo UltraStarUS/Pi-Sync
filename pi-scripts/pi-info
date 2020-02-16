@@ -1,0 +1,29 @@
+#/bin/bash!
+#ajaxx . delete-button
+## If you need to get basic information for troubleshooting
+## run this script
+echo "IP Address"
+## Gets the IP address
+ifconfig -a >> ipinfo
+## We run through several subnets, this will work 
+## for most
+if cat ipinfo | grep 192.1 &>/dev/null; then 
+	cat ipinfo | grep 192.1
+else
+	cat ipinfo | grep 10.1
+fi
+## Clears the file 
+rm ipinfo
+echo ""
+echo "MAC Address"
+if ifconfig eth0 | grep ether &>/dev/null; then
+	ifconfig eth0 | grep ether
+else
+	ifconfig wlan0 | grep HWaddr
+fi
+echo ""
+echo "Current Uptime"
+uptime
+echo ""
+echo "Kernel / System Info"
+uname -a 

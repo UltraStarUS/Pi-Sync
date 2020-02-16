@@ -1,0 +1,322 @@
+<h1 data-identifyelement="422"><span style="color: rgb(0, 0, 0);">Process for Connection / Basic Interactions</span></h1>
+<hr data-identifyelement="439">
+
+<h2 data-identifyelement="424"><span style="color: rgb(0, 0, 0);">Basic Explanation</span></h2>
+
+<p data-identifyelement="425"><span style="color: rgb(0, 0, 0);">&nbsp; &nbsp; There are three ways that you can interact with the Pi Server remotely.</span></p>
+
+<ol data-identifyelement="426">
+	<li><span style="color: rgb(0, 0, 0);">The <a href="https://en.wikipedia.org/wiki/Server_Message_Block" rel="noopener noreferrer" target="_blank">SMB / Samba</a> Share</span></li>
+	<li><span style="color: rgb(0, 0, 0);">VNC (<a href="https://en.wikipedia.org/wiki/Virtual_Network_Computing" rel="noopener noreferrer" target="_blank">Virtual Network Computing</a>)</span></li>
+	<li><span style="color: rgb(0, 0, 0);">SSH (<a href="https://en.wikipedia.org/wiki/Secure_Shell" rel="noopener noreferrer" target="_blank">Secure Shell</a>)</span></li>
+</ol>
+
+<p data-identifyelement="433"><span style="color: rgb(0, 0, 0);">The following scripts and process will be utilizing the last option, ssh, in order to connect the end-user system (you) to the server.&nbsp;</span></p>
+
+<h2 data-identifyelement="434"><span style="color: rgb(0, 0, 0);">Scripts</span></h2>
+
+<p data-identifyelement="435"><span style="color: rgb(0, 0, 0);">We have some scripts that are stored on the PiServer (\\piserver\Scripts). Download the <em>whole folder</em> and you&#39;ll have access to all of them.</span></p>
+
+<ol data-identifyelement="438">
+	<li><span style="color: rgb(0, 0, 0);">Either navigate to the downloaded folder previously mentioned or download it from the PiServer (\\piserver\Scripts)</span>
+
+		<ol data-identifyelement="449">
+			<li><span style="color: rgb(0, 0, 0);">Open file Explorer and navigate to `\\piserver`, there will be several available folders. Right click the `Scripts` folder and copy it to your `Documents` folder.</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Once you&#39;ve opened the folder take a cursory look at the options to find what you need / want to do.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">You will find the following:</span>
+
+		<ol data-identifyelement="444">
+			<li><span style="color: rgb(0, 0, 0);">PiServer_Connect.bat: This will give you an ssh connection to the Pi Server</span></li>
+			<li><span style="color: rgb(0, 0, 0);">PiServer_Re-Sync.bat: This will grab and replace the `boxofcxml` file on the Pi Server with the newest available one from the Vista Server</span></li>
+			<li><span style="color: rgb(0, 0, 0);">PiServer_SendFile.bat: This will send files from the folder &#39;Files-To-Send&#39; on the host system straight to the Pi Server</span></li>
+			<li><span style="color: rgb(0, 0, 0);">PiServer_Reboot.bat: This will actually give you ice cream :^). Sorry, it will reboot the Pi Server&nbsp;</span>
+
+				<ol data-identifyelement="457">
+					<li><span style="color: rgb(0, 0, 0);">Please don&#39;t use this unless absolutely necessary. &nbsp;</span></li>
+				</ol>
+			</li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Double click on the one you have found to be what you need, it will run and may ask for a password. Just type in <span style="background-color: rgb(0, 0, 0);">[iT@dM!n]</span> for any prompts and it will go through.</span></li>
+</ol>
+
+<h2 data-identifyelement="461"><span style="color: rgb(0, 0, 0);">Interactions</span></h2>
+
+<h3 data-identifyelement="462"><span style="color: rgb(0, 0, 0);">Connecting to the Pi Server</span></h3>
+
+<p data-identifyelement="463"><span style="color: rgb(0, 0, 0);">&nbsp; &nbsp; An explanation of the PiServer_Connect.bat Script.</span></p>
+
+<ol data-identifyelement="464">
+	<li><span style="color: rgb(0, 0, 0);">Naviagte to your local scripts folder (copied from the Pi Server)</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Double click to run the `PiServer_Connect.bat` script</span></li>
+	<li><span style="color: rgb(0, 0, 0);">It uses an ssh key, meaning you should not have to plug in a password.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">It will load into a terminal like the one pictured, which means you have connected!</span>
+
+		<ol data-identifyelement="469">
+			<li><span style="color: rgb(0, 0, 0);"><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076467845/original/aJHtrcltidsGF70MnISDYGcUNU_pFFUAsA.png?1574574695" style="width: 595px;" class="fr-fic fr-fil fr-dib" data-id="4076467845"></span></li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="472"><span style="color: rgb(0, 0, 0);">Samba Share</span></h3>
+
+<ol data-identifyelement="473">
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Connect to the Pi Server using the Windows File Explorer&nbsp;</span>
+
+		<ol data-identifyelement="474">
+			<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Either map the drive or use the search bar / directory.&nbsp;</span></li>
+			<li><span style="color: rgb(0, 0, 0);">The Pi Server&#39;s IP is 192.168.240.239 and the public name is piserver. It is on Active Directory (AD), so you can connect using your windows login credentials</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">The accessible folders on the samba share are: Website, IMG, Scripts, PiShare.</span>
+
+		<ol data-identifyelement="477">
+			<li><span style="color: rgb(0, 0, 0);">To connect, you would select `\\piserver\Webiste` or `\\piserver\PiShare`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">Website Links to `/usr/share/nginx/html/`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">PiShare Links to `/samba/pi/pishare/`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">IMG Links to `home/pi/IMG/`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">Scripts Links to `/home/pi/Scripts/`</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">The permissions that AD users have are somewhat limited -- and by somewhat, I mean you can only read data and write new data.&nbsp;</span>
+
+		<ol data-identifyelement="484">
+			<li><span style="color: rgb(0, 0, 0);">Meaning that you can read a document that is in the share, but you can only save a new file not overwrite.&nbsp;</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">You can also cut / remove data from the share, edit it, then replace it in the share.</span></li>
+</ol>
+
+<h3 data-identifyelement="487"><span style="color: rgb(0, 0, 0);">VNC</span></h3>
+
+<ol data-identifyelement="488">
+	<li><span style="color: rgb(0, 0, 0);">Find, Download, and Install the VNC viewer of your preference.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Open a connection to 192.168.240.239</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Type in the Password that was made during the setup process (most likely the password of the pi user)</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Profit!</span></li>
+</ol>
+
+<h1 data-identifyelement="452"><span style="color: rgb(0, 0, 0);">Advanced Interactions</span></h1>
+<hr data-identifyelement="453">
+
+<p data-identifyelement="454"><span style="color: rgb(0, 0, 0);">Once you have used the `Connecting to the Pi Server` section above, you are able to do the following</span></p>
+
+<h3 data-identifyelement="493"><span style="color: rgb(0, 0, 0);">Pi Information Collection</span></h3>
+
+<p data-identifyelement="494"><span style="color: rgb(0, 0, 0);">By utilizing a script I wrote on the Pi Server you can quickly iterate over any number of pis based on either their name or IP address. Everything referred to here is in the `/home/pi/` directory</span></p>
+
+<ol data-identifyelement="495">
+	<li><span style="color: rgb(0, 0, 0);">First, check the `.names` file by executing `cat .names`</span></li>
+	<li><span style="color: rgb(0, 0, 0);">This will output similarly to the following photo, if you want to modify this list then you can edit it with nano or vim</span>
+
+		<ol data-identifyelement="498">
+			<li><span style="color: rgb(0, 0, 0);">Editing can be done by executing `nano .names` or `vi .names`</span></li>
+			<li><span style="color: rgb(0, 0, 0);"><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076466597/original/tMMvlluLedcnfecpL1tvNDKON9pEpz_PEQ.png?1574560015" style="width: 144px;" data-id="4076466597" class="fr-fic fr-dii"></span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Then, open the `iterator.sh` script in your editor of choice to modify the tasks it will conduct when run.&nbsp;</span>
+
+		<ol data-identifyelement="503">
+			<li><span style="color: rgb(0, 0, 0);">This is similar to the Pi setup process, delete the `#` from the front of a command you want it to conduct</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Once you have finalized your edits you can run the script by executing `./iterator.sh`</span>
+
+		<ol data-identifyelement="506">
+			<li><span style="color: rgb(0, 0, 0);">While not all of the Pis have been swapped over to the newest images, it may request that you input a password, it would be the standard Pi password <span style="background-color: rgb(0, 0, 0);">[ULTRAPi]</span></span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Once it completes, the tasks that you have set up in step 3 will be conducted.&nbsp;</span></li>
+	<li><span style="color: rgb(0, 0, 0);">All outputs from the command will be in the File `Collection`</span></li>
+</ol>
+
+<h3 data-identifyelement="510"><span style="color: rgb(0, 0, 0);">Updating the Server</span></h3>
+
+<p data-identifyelement="511"><span style="color: rgb(0, 0, 0);">This should be conducted fairly often to make sure that the system stays somewhat secure.&nbsp;</span></p>
+
+<ol data-identifyelement="512">
+	<li><span style="color: rgb(0, 0, 0);">Execute the `update` command.&nbsp;</span>
+
+		<ol data-identifyelement="514">
+			<li><span style="color: rgb(0, 0, 0);">It is a pi user alias for the command `sudo apt update &amp;&amp; sudo apt upgrade -y &amp;&amp; sudo apt autoremove -y`</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Wait for the command to end.&nbsp;</span></li>
+	<li><span style="color: rgb(0, 0, 0);">You just updated a Linux Server running in a production environment.</span></li>
+</ol>
+
+<h2 data-identifyelement="518"><span style="color: rgb(0, 0, 0);">Changing Permissions of Files / Directories and Moving Files around using CLI</span></h2>
+
+<p data-identifyelement="519"><span style="color: rgb(0, 0, 0);">This is more `Linux 101` than it is specific information for the Pi Server, but it is still important nonetheless.&nbsp;</span></p>
+
+<p data-identifyelement="520"><span style="color: rgb(0, 0, 0);">You have 5 commands for moving files around, and 2 commands for changing data permissions</span></p><pre data-identifyelement="521"><span style="color: rgb(0, 0, 0);">Moving: mv, cp, rm, scp, mount. Permissions: chmod, chown </span></pre>
+
+<p data-identifyelement="522"><span style="color: rgb(0, 0, 0);">I highly suggest that you copy data, especially that which is important, rather than move it. It is essentially the difference between copy and cut. I&#39;ve been burned by the mv (move) command before, I hope you don&#39;t too.&nbsp;</span></p>
+
+<h3 data-identifyelement="523"><span style="color: rgb(0, 0, 0);">Move or Copy Data from Point A to Point B</span></h3>
+
+<ol data-identifyelement="524">
+	<li><span style="color: rgb(0, 0, 0);">First, locate Point A and Point B. This can be directories or files, you need to know the path of the data before you can move it.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Second, confirm that your user has the permissions to move a file and that it will not disrupt a program by moving or copying it.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Syntax: for cp, mv, scp, and mount you execute the command essentially the same.&nbsp;</span>
+
+		<ol data-identifyelement="528">
+			<li><span style="color: rgb(0, 0, 0);">`[program] -[modifiers] path/to/source path/to/destination</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">However, be careful as to what you <strong><em>mv</em></strong> as it can cause serious damage pulling configuration files around on a running server.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">A Key Trick with cp, mv and scp is that you can overwrite a file by moving one into another, or copying it into another file.&nbsp;</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Another is to use the `*` character to delineate between the folder and the folder&#39;s contents</span>
+
+		<ol data-identifyelement="535">
+			<li><span style="color: rgb(0, 0, 0);">Example 1: `cp -r /home/pi/Documents/Testfolder/ ~/Testfolder1/`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">Example 2: `cp -r /home/pi/Documents/Testfolder/* ~/Testfolder1/`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">1 will copy the folder `Testfolder` <em>and</em> its content, while 2 will copy <em>only</em> the contents. Both will output to the same folder however.</span></li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="541"><span style="color: rgb(0, 0, 0);">Mounting</span></h3>
+
+<p data-identifyelement="542"><span style="color: rgb(0, 0, 0);">There are limited times you will actually need to mount anything to the Server, so I will show one instance.&nbsp;</span></p>
+
+<p data-identifyelement="543"><span style="color: rgb(0, 0, 0);">If the Vista Server becomes disconnected, or stops syncing with the Pi Server then you will most likely need to execute the following:&nbsp;</span></p>
+
+<p data-identifyelement="544"><span style="color: rgb(0, 0, 0);">sudo mount -t cifs &#39;//vista-akchin/VISTA/Extracts/ExtractResults/&#39; /home/pi/.webbackup/mntpoint/ -o cred=/root/.cred/.cred</span></p>
+
+<p data-identifyelement="545"><span style="color: rgb(0, 0, 0);">The mount command commonly requires sudo / root level access in order perform its actions as a result of them being system / environment changes. However, like most commands dealing with data it follows a similar syntax to the move and copy commands (mount -[modifiers] path/to/source path/to/destination -[modifiers]).</span></p>
+
+<p data-identifyelement="545"><span style="color: rgb(0, 0, 0);"><strong><em>This will also be in a script under the `~/.script/` directory, the `mount.sh` script will automate the specific command above.</em></strong><br></span></p>
+
+<h3 data-identifyelement="546"><span style="color: rgb(0, 0, 0);">Remove Data&nbsp;</span></h3>
+
+<ol data-identifyelement="547">
+	<li><span style="color: rgb(0, 0, 0);">The blessed rm command, is massively cursed.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Take a moment before you &nbsp;hit enter whenever you remove a file or directory; as it is almost always unrecoverable.&nbsp;</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Follow steps 1 and 2 from Move or Copy, replacing moving and copying with removing and deleting.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Syntax: rm -[modifiers] path/to/file/or/directory</span></li>
+	<li><span style="color: rgb(0, 0, 0);">When deleting a folder, and <strong><em>everything in it&nbsp;</em></strong>you can use the `r` and `f` modifiers&nbsp;</span>
+
+		<ol data-identifyelement="555">
+			<li><span style="color: rgb(0, 0, 0);">Example: `rm -rf /home/pi/Documents/Testfolder/`</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">As with Move or Copy, you can use the `*` character to delineate between the folder and the folder&#39;s contents</span>
+
+		<ol data-identifyelement="558">
+			<li><span style="color: rgb(0, 0, 0);">Example 1: `rm -rf /home/pi/Documents/Testfolder/`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">Example 2: `rm -rf /home/pi/Documents/Testfolder/*`</span></li>
+			<li><span style="color: rgb(0, 0, 0);">1 will delete the folder `Testfolder` <em>and</em> its content, while 2 will delete <em>only</em> the contents and leave `Testfolder` up</span></li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="564"><span style="color: rgb(0, 0, 0);">Changing file and directory permissions / Ownership&nbsp;</span></h3>
+
+<p data-identifyelement="565"><span style="color: rgb(0, 0, 0);">The two commands, chown and chmod conduct changes to ownership and permissions respectively.&nbsp;</span></p>
+
+<ol data-identifyelement="566">
+	<li><span style="color: rgb(0, 0, 0);">These commands are commonly run with sudo/root level access, so prepare accordingly</span>
+
+		<ol data-identifyelement="568">
+			<li><span style="color: rgb(0, 0, 0);">Executing `sudo -su` and typing in the passwod for the account will give you that access.</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Follow steps 1 and 2 from Move or Copy, replacing moving and copying with changing ownership and permissions.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Syntax: chown [owner]:[group] /path/to/file/or/directory <strong><em>OR&nbsp;</em></strong>chmod [permission] /path/to/file/or/directory</span>
+
+		<ol data-identifyelement="574">
+			<li><span style="color: rgb(0, 0, 0);">Owner being the user that will become the owner in chown</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">Using these commands in combination with each other allows you to limit read, write, and exectue permissions on any given file or directory (even some you shouldn&#39;t touch) to specific users and groups.</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Using a website like <a href="https://chmod-calculator.com/" rel="noopener noreferrer" target="_blank">Chmod Calculator</a> allow you to better modify permissions.&nbsp;</span>
+
+		<ol data-identifyelement="579">
+			<li><span style="color: rgb(0, 0, 0);">Once you decide the permissions you want to grant or deny you plug in the number to the `permission` portion from step 3.</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">A few common actions are:</span>
+
+		<ol data-identifyelement="582">
+			<li><span style="color: rgb(0, 0, 0);">sudo chown www-data:www-data filename</span></li>
+			<li><span style="color: rgb(0, 0, 0);">sudo chmod 700 filename</span></li>
+			<li><span style="color: rgb(0, 0, 0);">sudo chmod 777 filename</span></li>
+			<li><span style="color: rgb(0, 0, 0);">sudo chmod 660 ~/.ssh/</span></li>
+		</ol>
+	</li>
+</ol>
+
+<p data-identifyelement="587"><span style="color: rgb(0, 0, 0);">Use these commands wisely.</span></p>
+
+<h2 data-identifyelement="587"><span style="color: rgb(0, 0, 0);">Samba Issues</span></h2>
+
+<p data-identifyelement="587"><span style="color: rgb(0, 0, 0);">If you or anyone else is unable to connect to the Piserver through the file explorer then this will need to happen.&nbsp;</span></p>
+
+<ol>
+	<li data-identifyelement="587"><span style="color: rgb(0, 0, 0);">Connect to the Pi Server using the `PiServer_Connect.bat` script</span></li>
+	<li data-identifyelement="587"><span style="color: rgb(0, 0, 0);">Execute `reconn`. When it asks for a password, input the pi user&#39;s password as it is the same as piserv&#39;s <br></span></li>
+	<li data-identifyelement="587"><span style="color: rgb(0, 0, 0);">Profit!</span></li>
+</ol>
+
+<h1 data-identifyelement="503"><span style="color: rgb(0, 0, 0);">Web-Server Data / Configuration Updating</span></h1>
+<hr data-identifyelement="588">
+
+<h2 data-identifyelement="589"><span style="color: rgb(0, 0, 0);">Box Office Signage Modification / Updating</span></h2>
+
+<h3 data-identifyelement="590"><span style="color: rgb(0, 0, 0);">Modifying Manually using Windows File Explorer</span></h3>
+
+<ol data-identifyelement="591">
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Follow the steps outlined in the `Samba Share` Section of `Advanced Interactions`</span></li>
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Navigate to `\\Piserver\Website\Theaterboards\`</span></li>
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Right click on the file `boxofcxml.001` and copy it to your workspace (Desktop, Documents folder, e.t.c)</span></li>
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Edit it to your heart&#39;s content using a text editor of your choice</span></li>
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Navigate back to `\\Piserver\Website\Theaterboards\`</span></li>
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Cut out the `boxofcxml.001` file and paste in the one you have modified.&nbsp;</span></li>
+	<li style='box-sizing: border-box; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Profit!</span></li>
+</ol>
+
+<h3 data-identifyelement="592"><span style="color: rgb(0, 0, 0);">Automatically Updating the Data</span></h3>
+
+<ol data-identifyelement="593">
+	<li><span style="color: rgb(0, 0, 0);">Navigate to your Scripts folder</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Run the `PiServer_Re-Sync.bat` script</span>
+
+		<ol data-identifyelement="596">
+			<li><span style="color: rgb(0, 0, 0);">If it asks you to input a password type in the password from the top</span></li>
+		</ol>
+	</li>
+	<li><span style="color: rgb(0, 0, 0);">It should sync up as expected&nbsp;</span>
+
+		<ol data-identifyelement="599">
+			<li><span style="color: rgb(0, 0, 0);"><em>Should</em> is the keyword there.&nbsp;</span></li>
+			<li><span style="color: rgb(0, 0, 0);">After a reboot it will usually fail to mount the Vista server that is required for this to work. In that case:</span>
+
+				<ol data-identifyelement="603">
+					<li><span style="color: rgb(0, 0, 0);">Connect to the Pi Server using the `PiServer_Connect.bat` script.</span></li>
+					<li><span style="color: rgb(0, 0, 0);">Execute the command from the `Mounting` section of `Advanced Interactions`</span></li>
+					<li><span style="color: rgb(0, 0, 0);">Re run the `PiServer_Re-Sync.bat` script</span></li>
+				</ol>
+			</li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="607"><span style="color: rgb(0, 0, 0);">Modifying Manually using the `PiServer_SendFile.bat` script</span></h3>
+
+<ol data-identifyelement="608">
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Get the boxofcxml.001 file from \\vista-akchin\VISTA\Extracts\ExtractResults\NCRBOXOFCXML and drop it in your workspace (desktop, documents, e.t.c)</span></li>
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Make any neccesary changes to the file</span></li>
+	<li><span style="color: rgb(0, 0, 0);">Drop the `boxofcxml.001` into the `Files-To-Send` folder in your `Scripts` folder</span></li>
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Run the `PiServer_SendFile.bat` script</span></li>
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Select `Webserver` from the selection</span></li>
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">It may ask for a password, use the one from above</span></li>
+	<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">Once the script as finished, the `boxofcxml.001` file will be in the `Theaterboards` directory of the webserver (/usr/share/nginx/html/Theaterboards/)</span>
+
+		<ol data-identifyelement="610">
+			<li style='box-sizing: border-box; margin-bottom: 0px; word-break: normal; overflow-wrap: break-word; font-size: 13px; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; text-align: start; text-indent: 0px; color: rgb(24, 50, 71);'><span style="color: rgb(0, 0, 0);">It will also delete the copy in the `Files-To-Send` folder.</span></li>
+		</ol>
+	</li>
+</ol>

@@ -1,0 +1,345 @@
+<h1 data-identifyelement="428">Explanation and Reasoning</h1>
+<hr data-identifyelement="429">
+
+<h2 data-identifyelement="430">Explanation</h2>
+
+<p data-identifyelement="431">The Signage system is built in Two parts: Theater signage that points to a web-page, and Menu / Ad signage that displays locally stored videos.&nbsp;</p>
+
+<p data-identifyelement="432">The Pi Server is meant to bridge the gap between Marketing and Signage. Interfacing with Marketing by utilizing an Active Directory (AD) shared folder and connecting the Pis to those folders.&nbsp;</p>
+
+<p data-identifyelement="433">
+	<br>
+</p>
+
+<p data-identifyelement="435">The Deployed Pi Server needs to be able to do three things: <strong>Host&nbsp;</strong>a share Drive, <strong>Serve</strong> web-pages for signage across the building, <strong>Sync</strong> the data between all Pis in the building.</p>
+
+<p data-identifyelement="439">
+	<br>
+</p>
+
+<h3 data-identifyelement="441"><strong>Hosting</strong></h3>
+
+<p data-identifyelement="443">By setting up a `Samba`, or `smb`, share folder utilizing the `ULTRASTARUS.COM` Active Directory domain, Marketing is able to drop in whatever data they want showing on the pis into specific folders.</p>
+
+<h3 data-identifyelement="444"><strong>Serving</strong></h3>
+
+<p data-identifyelement="446">Serving is handled through the use of the `Linux, Nginx, PHP` stack, or `LEP` stack. A system, running linux, will run an Nginx Webserver using PHP-FPM services to serve websites using the webdata created by Arthur.&nbsp;</p>
+
+<h3 data-identifyelement="447"><strong>Syncing</strong></h3>
+
+<p data-identifyelement="449">Finally, syncing is handled through the use of `rsync`, a program that allows us to easily and securely sync up data between the Server and Pis. The automation of this process is handled by the Pis, meaning there is no central syncing automation only a central repository (the server).</p>
+
+<h2 data-identifyelement="451">Reasoning</h2>
+
+<p data-identifyelement="452">Linux is free. Raspberry pis are <em>the</em> cheapest computer available. Most of the reasoning behind using this homebrew system is cost, but also flexibility. The second that one of these things goes down for any number of reasons, we can have it back up and running in record time; We can&#39;t do that if we were using Windows 10 IOT nor centralized signage.</p>
+
+<p data-identifyelement="454">
+	<br>
+</p>
+
+<h1 data-identifyelement="462">Initialization and Basic Setup</h1>
+<hr data-identifyelement="463">
+
+<p data-identifyelement="466">First and Foremost, <a href="https://www.youtube.com/watch?v=fZfg1Gtcg08" rel="noopener noreferrer" target="_blank">click here</a></p>
+
+<p data-identifyelement="467">Now that the soundtrack has been selected, we can begin.</p>
+
+<p data-identifyelement="466">The Linux Distribution that we used for this process was `Ubuntu Desktop 18.0.4`, This can work with Server but many of the specifics are different when doing so.&nbsp;</p>
+
+<h2 data-identifyelement="470">Hardware</h2>
+
+<p data-identifyelement="471">There are two ways that the server can be set up. One being a physical computer, the other being a Virtual Machine (VM). I will go over both options, using Hyper-V as the Virtual Machine manager.</p>
+
+<h3 data-identifyelement="472">Physical Computer</h3>
+
+<ol data-identifyelement="473">
+	<li>Procure:
+
+		<ol data-identifyelement="475">
+			<li>A system (working, w/ hard drive and enough ram to support a web-server)</li>
+			<li>A monitor, Keyboard, Mouse, and cables for all</li>
+			<li>A USB Drive (at least 8gb)</li>
+			<li>Like a Redbull or something</li>
+			<li>Another system to get the USB set up (your system)</li>
+			<li>A Network connection for your system and the new server</li>
+		</ol>
+	</li>
+	<li>On your system download the new Operating system <a href="http://releases.ubuntu.com/18.04.2/ubuntu-18.04.2-desktop-amd64.iso?_ga=2.128483724.1647484540.1564877825-1308465704.1561809213">here</a>
+
+		<ol data-identifyelement="460">
+			<li>Plug in the USB once the download is complete</li>
+		</ol>
+	</li>
+	<li>Download or run the application `Rufus` from <a href="https://rufus.ie/" rel="noopener noreferrer" target="_blank">this page</a>, it should look like the following picture once run (v3.6).
+
+		<ol data-identifyelement="486">
+			<li>&nbsp;<img class="fr-fic fr-fil fr-dib" style="width: 293px;" data-id="4071249048" src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4071249048/original/7Z2Gcc-gOJpsg3TGYnC_2uJJsXqZlmvAqg.png?1564878517"></li>
+		</ol>
+	</li>
+	<li>Under Device select the USB that you&#39;ve plugged in</li>
+	<li>Click on `SELECT` and select the `.iso` file you&#39;ve just downloaded in file explorer</li>
+	<li>Leave all the other selections as they are and press `START`</li>
+	<li>Once it has finished, the USB is ready.&nbsp;</li>
+	<li>Take a sip of your redbull</li>
+	<li>Plug in all the peripherals procured from step 1 into the server, as well as the newly finished USB.&nbsp;</li>
+	<li>Turn it on and press the corresponding Boot selector button (Dell - F12, HP - DEL) and choose a USB Device.</li>
+	<li>Once the system boots into Ubuntu Move onto the Software Section.
+
+		<ol data-identifyelement="474">
+			<li>If it fails during the boot, confirm that you have downloaded the correct architecture&#39;s ISO (x86 vs x64), and confirm that there is no Secure Boot turned on in the System&#39;s UEFI/BIOS</li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="499">Hyper-V VM</h3>
+
+<ol data-identifyelement="500">
+	<li>Procure&nbsp;
+
+		<ol data-identifyelement="502">
+			<li>A system to do this on, including monitor, keyboard, windows 10, mouse.&nbsp;</li>
+			<li>A redbull</li>
+			<li>Network Connection</li>
+		</ol>
+	</li>
+	<li>Confirm that Hyper-V is installed or to install it for the first time
+
+		<ol data-identifyelement="505">
+			<li>Press the windows key, type `features` and select `Turn Windows Features on and off`</li>
+		</ol>
+	</li>
+	<li>Then check the box called &#39;Hyper-V&#39; as pictured
+
+		<ol data-identifyelement="508">
+			<li><img class="fr-fic fr-dii" data-id="4071249746" src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4071249746/original/dIFcWlm3K50eGg_IICLPlwxVZkLqj-rrBQ.png?1564890373"></li>
+		</ol>
+	</li>
+	<li>Download the new Operating system <a href="http://releases.ubuntu.com/18.04.2/ubuntu-18.04.2-desktop-amd64.iso?_ga=2.128483724.1647484540.1564877825-1308465704.1561809213">here</a></li>
+	<li>Once your system installs Hyper-V and restarts, open Hyper-V Manager</li>
+	<li>Then Click on `Virtual Switch Manager` from the right most section
+
+		<ol data-identifyelement="489">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772532/original/JFYwQSvFTZ9vCSaxcNX-KRfVqBQd2QudYw.png?1575086072" style="width: 446px;" data-id="4076772532" class="fr-fic fr-dii"></li>
+		</ol>
+	</li>
+	<li>Click on `New virtual network switch`
+
+		<ol data-identifyelement="493">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772533/original/eF9kuhigKQyRbql6_mfqlrSS0HilfaDiRw.png?1575086086" style="width: auto;" data-id="4076772533" class="fr-fic fr-dii"></li>
+		</ol>
+	</li>
+	<li>Select `External` and `Create Virtual Switch`
+
+		<ol data-identifyelement="497">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772538/original/1rFR6tYVXq3uKaeotTaMiElCRJPZrflF6w.png?1575086122" style="width: 338px;" data-id="4076772538" class="fr-fic fr-dii"></li>
+		</ol>
+	</li>
+	<li>Name it anything and confirm that `External network` is selected as it is below,
+
+		<ol data-identifyelement="501">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772549/original/ZZHeTNiEUznDGfJkG6rtNyby8gqJvy6Z5w.png?1575086214" style="width: 323px;" data-id="4076772549" class="fr-fic fr-dii"></li>
+		</ol>
+	</li>
+	<li>Press Apply then ok</li>
+	<li>Click on `New` in the right most Panel, as pictured
+
+		<ol data-identifyelement="515">
+			<li><img class="fr-fic fr-fil fr-dib" style="width: 247px;" data-id="4071249787" src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4071249787/original/f6vtlGgTcsVGYQdsOd1GJZSX6B7RzyThKg.png?1564890850"></li>
+		</ol>
+	</li>
+	<li>Then, Select Virtual Machine</li>
+	<li>Give it a cool name, like `Pi-Server`, `PiServer`, `Piserver`, or even `PISERVER`</li>
+	<li>Select Generation 1 on the next screen</li>
+	<li>Give the Virtual machine enough Startup memory for it to run well enough during the setup phase then click next.
+
+		<ol data-identifyelement="522">
+			<li>I suggest 2-4 GBs of Ram, or 2048 - 4096 MB</li>
+		</ol>
+	</li>
+	<li>Select the Switch you made earlier from the drop down, then next<strong><br></strong></li>
+	<li>Change the size of the Virtual hard Disk, as pictured, down to something more reasonable (32-64 gb max).
+
+		<ol data-identifyelement="527">
+			<li><img class="fr-fic fr-fil fr-dib" style="width: 430px;" data-id="4071249811" src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4071249811/original/TH_2JJSQg9WonFkgbHVocLcJXuHEZceocg.png?1564891080"></li>
+		</ol>
+	</li>
+	<li>On the next page, Select `Install an operating system from a bootable CD/DVD-ROM` and select `Image file (.iso)` and press `Browse` selecting the .iso file that you downloaded.</li>
+	<li>Once Selected, hit `Finish`</li>
+	<li>Now right click on the VM you made on the main window</li>
+	<li>Select Connect and press the start button</li>
+	<li>Once the VM has started up Move onto the next section.</li>
+</ol>
+
+<h2 data-identifyelement="535">Software</h2>
+
+<h3 data-identifyelement="536">OS Setup</h3>
+
+<p data-identifyelement="537">&nbsp; &nbsp; Regardless of the type of install you&#39;re doing (Physical or Virtual) the steps from here on are about the same.&nbsp;</p>
+
+<ol data-identifyelement="538">
+	<li>Select `English`
+
+		<ol data-identifyelement="525">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772652/original/itpG_wU2WYhTb_-kfjXaAiKLQB5-urhY6w.png?1575086982" style="width: 495px;" class="fr-fic fr-fil fr-dib" data-id="4076772652"></li>
+		</ol>
+	</li>
+	<li>Select Install Ubuntu
+
+		<ol data-identifyelement="529">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772657/original/o7hfILnDjq9JDYbpoJdLdSwLlQu2Xx8bwg.png?1575087032" style="width: 454px;" class="fr-fic fr-fil fr-dib" data-id="4076772657"></li>
+		</ol>
+	</li>
+	<li>Once you get to the page as pictured, hit continue
+
+		<ol data-identifyelement="533">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772662/original/Gsm6b3gmFoAI1e6GckhRS0aSDmCH0lOLDg.png?1575087119" style="width: 394px;" class="fr-fic fr-fil fr-dib" data-id="4076772662"></li>
+		</ol>
+	</li>
+	<li>Hit continue through the Keyboard layout section</li>
+	<li>Select `minimal Install` and `Download Updates while installing ubuntu`. Then, hit continue</li>
+	<li><strong>Unless Specifically requested not to&nbsp;</strong>select `Erase disk and install Ubuntu` and click `Install Now`
+
+		<ol data-identifyelement="540">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076772679/original/EZywByci-xjBZSU3nAzKT6imMIq0nuQALg.png?1575087205" style="width: 467px;" class="fr-fic fr-fil fr-dib" data-id="4076772679"></li>
+		</ol>
+	</li>
+	<li>Then hit continue when it pops up with `Write the changes to disks?` (Unless you&#39;ve made changes, in which case confirm them, then hit continue)</li>
+	<li>Choose Phoenix as your Timezone and hit continue &nbsp; &nbsp;</li>
+	<li>All of the scripts and documentation following this point are written for the following `Who are you?` options (except password):
+
+		<ol data-identifyelement="551">
+			<li>Your name: &quot;Steve&quot;</li>
+			<li>Your Computer&#39;s name: Pi-Server</li>
+			<li>Pick a username: pi</li>
+		</ol>
+	</li>
+	<li>Type in a strong and memorable password, or generate one and save it in a keyring.</li>
+	<li>Select `Log in automatically`, though this is insecure, it is a requirement for the VNC Settings later on.</li>
+	<li>Press Continue and Drink some more redbull. It won&#39;t take too much longer before you do the configurations.
+
+		<ol data-identifyelement="552">
+			<li>The system should reboot after the installation has been completed. Select `Restart Now` if asked.</li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="558">Software Downloads and Initialization</h3>
+
+<ol data-identifyelement="562">
+	<li>Once the Desktop is displayed, click through any popups (selecting no when asked to share data)</li>
+	<li>Open a new Terminal on the Server (Use the shortcut: CTRL + SHIFT + T)</li>
+	<li>Execute, `sudo apt update &amp;&amp; sudo apt upgrade -y`, this will update the location from which you download the applications later on.&nbsp;
+
+		<ol data-identifyelement="565">
+			<li>Use the Password you chose when prompted</li>
+			<li>If you hit any issues talking about `dpkg` or `unavailable resource` you can execute `sudo dpkg --configure -a`, or reboot the Server</li>
+		</ol>
+	</li>
+	<li>Once the update has completed, run `sudo apt install git`</li>
+	<li>Finally, Execute `cd ~` followed by `git clone <a href="https://github.com/delete-button/pi-sync%60" rel="noreferrer">https://github.com/delete-button/pi-sync`</a></li>
+</ol>
+
+<h2 data-identifyelement="562">Configuring the Server</h2>
+
+<p data-identifyelement="563">This is where the fun begins&nbsp;</p>
+
+<h3 data-identifyelement="564">Networking Configuration</h3>
+
+<ol>
+	<li data-identifyelement="565">Execute `sudo su`
+
+		<ol>
+			<li data-identifyelement="565">Input the Pi account password when prompted</li>
+		</ol>
+	</li>
+	<li>Execute `nano /etc/network/interfaces`</li>
+	<li>Follow the format of the file from the following picture
+
+		<ol>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4077857711/original/mwcng6Dpb7GNFX4Y3pq0xACiedysgzb80Q.png?1577061529" style="width: auto;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4077857711"></li>
+		</ol>
+	</li>
+	<li>`eth0` from the above refers to the network card name, place in the name you find after executing `ip a`</li>
+	<li>Copy the rest of the settings as they are on your own system.</li>
+	<li>Once you save the file and exit it, execute `ip addr flush dev eth0` (or other network card name)</li>
+	<li>This may disconnect your session with the Server, after the command runs you can attempt to ping the server&#39;s new address to see if it comes back up. When / if it does, then reconnect and confirm your changes. If not, then you may need to redo the configurations.&nbsp;</li>
+</ol>
+
+<h3 data-identifyelement="589">Syncing / Web Server / Shared Folders / VNC Configurations</h3>
+
+<p data-identifyelement="590">These are all done with the Pi-Sync repository of scripts, the following set of instructions will set all of these things up accordingly.</p>
+
+<ol data-identifyelement="591">
+	<li>First execute the command `cd pi-sync`&nbsp;
+
+		<ol data-identifyelement="593">
+			<li>If the folder isn&#39;t there, execute `ls`. If you see the Pi-Sync folder then execute `cd Pi-Sync` as capitalization matters.</li>
+		</ol>
+	</li>
+	<li>Now execute `sudo su`, input the password you set for the pi user.</li>
+	<li>Execute `cd setup/` then `chmod 700 setup/Service.Install.sh` followed by `./Service.Install.sh`</li>
+	<li>If you&#39;re Presented with the following screen, hit okay as this will change later in the script
+
+		<ol data-identifyelement="598">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076773855/original/oJIFvwpCagoQWgmQNxQ1pLQtE0-pQRGNzw.png?1575094150" style="width: 519px;" class="fr-fic fr-fil fr-dib" data-id="4076773855"></li>
+		</ol>
+	</li>
+	<li>When requested for the account password to the AD account `piserv` use the same password used for the pi user. This may be subject to change but is the current configuration as of now (*12/1/19)</li>
+	<li>Exit the sudo terminal by executing `exit`, then execute`./VNC.Setup.sh`
+
+		<ol data-identifyelement="603">
+			<li>When asked for a password, input something strong / or the one you set for the user account</li>
+		</ol>
+	</li>
+	<li>Finally, execute `sudo systemctl enable sshd`**</li>
+</ol>
+
+<h3 data-identifyelement="573">SSH Configuration</h3>
+
+<p data-identifyelement="576">I cannot, in good faith, put up the SSH keys that are used to connect to the server on the open internet in the form of GitHub. <strong><em>However</em></strong>, google drive is just fine. Download this <a href="https://drive.google.com/open?id=1aiKNCfUtlLEDsF-Wbq5xF0s_3RJytdmr" rel="noopener noreferrer" target="_blank">folder</a> to continue.&nbsp;</p>
+
+<ol data-identifyelement="579">
+	<li>On your System, Navigate to the downloaded Folder.</li>
+	<li>Right click the folder, unzip it, and open it once it is finished.</li>
+	<li>Go into the SSH folder</li>
+	<li>Execute the `sshTransfer.bat` file (clicking through yes if asked), enter the pi user password when requested.</li>
+	<li>Profit!</li>
+</ol>
+
+<h3 data-identifyelement="573">Power Configuration</h3>
+
+<p data-identifyelement="574">These are all pulled from a Hyper-V VM, if they are not reflective of the setup you&#39;re using then please adapt it to allow for to the computer to stay on with the screen indefinitely.</p>
+
+<ol data-identifyelement="575">
+	<li>From the Desktop of the Server press the windows/super button or send it through the top bar of your VNC Viewer</li>
+	<li>Search for `power` and select the option Under settings (as pictured below)
+
+		<ol data-identifyelement="578">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076802791/original/RwLdVK40jbRxWGvVzkCggzaTsxPRkw19fg.png?1575256006" style="width: auto;" class="fr-fic fr-fil fr-dib" data-id="4076802791"></li>
+		</ol>
+	</li>
+	<li>When you open the Power settings search under `Power Saving` and set the `Blank Screen` to `Never`
+
+		<ol data-identifyelement="582">
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076802793/original/TPypF3I-HQEH_T7cHGfJUyn5iYs4X4YAOw.png?1575256025" style="width: auto;" class="fr-fic fr-fil fr-dib" data-id="4076802793"></li>
+		</ol>
+	</li>
+</ol>
+
+<h3 data-identifyelement="591">Web Server Configurations</h3>
+
+<p data-identifyelement="592">The web server has already been <em>configured</em> but it now needs data to broadcast.&nbsp;</p>
+
+<p data-identifyelement="594">The configuration that has been implemented by the steps above puts the source folder for the website in the `/usr/share/nginx/html/` directory. <a href="https://drive.google.com/open?id=1aiKNCfUtlLEDsF-Wbq5xF0s_3RJytdmr" rel="noopener noreferrer" target="_blank">This</a> is the current (*12/19/19) web server data, except for poster files and BOXOFCXML.001 file.&nbsp;</p>
+
+<ol data-identifyelement="595">
+	<li>Download <a href="https://drive.google.com/open?id=1aiKNCfUtlLEDsF-Wbq5xF0s_3RJytdmr" rel="noopener noreferrer" target="_blank">this</a> folder if not done already</li>
+	<li>Unzip and open the downloaded folder</li>
+	<li>Go to the WebServer Folder</li>
+	<li>Execute the `WebTransfer.bat` script in the folder</li>
+	<li>Profit!</li>
+</ol>
+
+<p data-identifyelement="585">
+	<br>
+</p>

@@ -1,0 +1,7 @@
+#/bin/bash/!
+#ajaxx . delete-button
+## For use when a Pi has been redeployed and fails to sync
+cd ~/Pi-Sync/initialscripts/
+ssh -i ~/.ssh/.PiServer -T pi@$name "exit;"
+cd ~/.script/
+./Sync.sh $name $folder

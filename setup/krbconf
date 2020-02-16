@@ -1,0 +1,26 @@
+[libdefaults]
+  ticket_lifetime = 24h
+  default_realm = ULTRASTARUS.COM
+  forwardable = true
+[realms]
+  ULTRASTARUS.COM = {
+    kdc = 192.168.241.208
+    default_domain = ULTRASTARUS.COM
+  }
+[domain_realm]
+  .ultrastarus.com = ULTRASTARUS.COM
+  ultrastarus.com = ULTRASTARUS.COM
+[kdc]
+  profile = /etc/krb5kdc/kdc.conf
+[appdefaults]
+  pam = {
+    debug = false
+    ticket_lifetime = 36000
+    renew_lifetime = 36000
+    forwardable = true
+    krb4_convert = false
+  }
+[logging]
+  kdc = FILE:/var/log/krb5kdc.log
+  admin_server = FILE:/var/log/kadmin.log
+  default = FILE:/var/log/krb5lib.log

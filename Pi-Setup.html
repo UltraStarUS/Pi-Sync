@@ -1,0 +1,144 @@
+<p>Hi! So this is going to be the quick guide to getting a new pi up and running. I want to get this out quickly but I will update it with pictures soon!</p>
+
+<h2>Materials</h2>
+
+<ul>
+	<li>Your Desktop
+
+		<ul>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482533/original/-b9p0QXV3YLmbCpfMI1EbmpwBQp-fRygwg.png?1574653291" style="width: 217px;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482533"></li>
+		</ul>
+	</li>
+	<li>A pi
+
+		<ul>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482517/original/zUTfHmsFwNMQf3zeK5wHMlRzGQBOPLsFgQ.png?1574653263" style="width: 113px;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482517"></li>
+		</ul>
+	</li>
+	<li>The scripts from the piserver (\\piserver\Scripts)
+
+		<ul>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482566/original/yueI_9VPuZb4bXNdI_mEmmRl7AgjfaIBZw.png?1574653401" style="width: auto;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482566"></li>
+		</ul>
+	</li>
+	<li>A new Image (\\piserver\IMG)
+
+		<ul>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482570/original/oZsQc0iJFwhUuvbeGzTet11d7trxT7vQpg.png?1574653415" style="width: auto;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482570"></li>
+		</ul>
+	</li>
+	<li>Balenaetcher installed on your system (from <a href="https://www.balena.io/etcher/" rel="noopener noreferrer" target="_blank">here</a>)
+
+		<ul>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482501/original/KcNznq2NqWYdW6dGd-VhMR0JCA2Tvv-Y3A.png?1574653228" style="width: auto;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482501"></li>
+		</ul>
+	</li>
+	<li>Some way to read and write data on a microSD card
+
+		<ul>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482585/original/NQfTzERAosXJoTh9R7aaWsIJYFKKwXMwzA.png?1574653471" style="width: 150px;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482585"></li>
+		</ul>
+	</li>
+</ul>
+
+<h2>Procedure</h2>
+
+<ol>
+	<li>Grab the Image from the piserver&nbsp;
+
+		<ol>
+			<li>You can download it from \\piserver\IMG in the Windows File Explorer</li>
+		</ol>
+	</li>
+	<li>Get the microSD card out of the Pi you are setting up and plug it into your system using an adapter</li>
+	<li>Open balenaetcher or get it downloaded <a href="https://www.balena.io/etcher/" rel="noopener noreferrer" target="_blank">here</a></li>
+	<li>For `Select Image` choose the image that you just downloaded from the piserver
+
+		<ol>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482603/original/Wmpp_alLUgy0m-0XRM3woc-HTOWL6Ynf4A.png?1574653536" style="width: 342px;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482603"></li>
+		</ol>
+	</li>
+	<li>Confirm that the MicroSD card is the selected target, then hit `Flash!`</li>
+	<li>Once it has completed, put the MicroSD back into the Pi and get it setup at the refrigerator
+
+		<ol>
+			<li>There are a set of 3 cables connected with a velcro loop. Plug in all of them in any order except power, which should be last. (Ethernet, HDMI, Power)</li>
+		</ol>
+	</li>
+	<li>Once it begins to Power on it will go through a long boot process, and may reboot as it starts. This is to be expected and may take some time. &nbsp;</li>
+	<li>Get the Scripts folder open on your desktop
+
+		<ol>
+			<li>Downloaded from \\piserver\Scripts in the Windows File Explorer</li>
+		</ol>
+	</li>
+	<li>Run `PiServer_Connect.bat`
+
+		<ol>
+			<li>If it asks you yes or no, just type yes. It should connect quickly&nbsp;</li>
+			<li>If Smartscreen pops up, you can press yes.</li>
+			<li>Continue when the following window pops up</li>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4076482631/original/wNES0RHFQTSwkEQP99K68kEXPuuZcGbuwQ.png?1574653659" style="width: 412px;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4076482631"></li>
+		</ol>
+	</li>
+	<li>Once the Pi displays a desktop on the monitor, run the command `testpi`. This connects you to the Pi.&nbsp;
+
+		<ol>
+			<li>If this doesn&#39;t work, wait for a little bit; it can sometimes take a few minutes for the hostname to propagate to the PiServer</li>
+		</ol>
+	</li>
+	<li>Now, run `config`</li>
+	<li>
+		<a href="https://ultrastar.freshdesk.com/a/solutions/articles/4000101595" rel="noopener noreferrer" target="_blank"></a> The script will first ask for a hostname, use the naming structure found <a href="https://docs.google.com/spreadsheets/d/1ak2i0reR57W5Ulzu6WiDjGO_lgMyIVz2962G1Lr3Ma4/edit?usp=sharing" rel="noopener noreferrer" target="_blank">here</a></li>
+	<li>It will then come to a screen similar to the one pictured below. Use the steps outlined <a href="https://ultrastar.freshdesk.com/a/solutions/articles/4000101595" rel="noopener noreferrer" target="_blank">here</a>to edit the file, when you&#39;ve made the necessary changes press `ctrl+o`, `enter`, then `ctrl+x`
+
+		<ol>
+			<li><strong>NOTE</strong>: If the pi was a chrome display board and you are reconfiguring it, you have to delete the line at the bottom that has `autochrome` in it.</li>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4075810417/original/h4RNY8hJK_MLLA1_xEdZiC8UhE9iyDRaHA.png?1573441781" style="width: auto;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4075810417"></li>
+		</ol>
+	</li>
+	<li>It will then ask you if the Pi is WiFi, Ethernet, or a Chrome Display Board.&nbsp;
+
+		<ol>
+			<li>WiFi means the Pi will be connected to the UltraSecure WiFi network,&nbsp;</li>
+			<li>Ethernet means it will be connected to the network via an Ethernet cable,&nbsp;</li>
+			<li>Chrome Display Board means any of the Theaterboards, and most of the Box Office signage (as well as bowling1)
+
+				<ol>
+					<li>Refer to <a href="https://docs.google.com/spreadsheets/d/1ak2i0reR57W5Ulzu6WiDjGO_lgMyIVz2962G1Lr3Ma4/edit#gid=0" rel="noopener noreferrer" target="_blank">this</a> to determine if it is a Chrome Display Board</li>
+					<li>If it is a Display board it will ask again if it is WiFi or Ethernet, the same applies here as it does at step 14.</li>
+				</ol>
+			</li>
+		</ol>
+	</li>
+	<li>It will then ask you what you want to set as the source folder, from the selection choose whichever folder the Pi is meant to use. <strong>Do not type the `./` or the `:`.</strong>
+
+		<ol>
+			<li><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4075810679/original/5gnFaOlNR1l2Bcf7hFTIJ6qcdJPw16yq2w.png?1573442557" style="width: 232px;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4075810679"></li>
+			<li>An example input would be one of the following:</li>
+			<li>Main.Concessions/Combo.Boards</li>
+			<li>Harrahs.Bridge/Theater</li>
+			<li>JBar</li>
+		</ol>
+	</li>
+	<li>Finally, it will begin syncing for the first time. Posterboards tend to take longer due to the number and size of files and will be the bulk of the time spent on the setup process.&nbsp;
+
+		<ol>
+			<li>However, if it fails such as the picture below, wait for the pi to restart, then open a terminal window or ssh back into it, and execute the `cleaner` command. <s><s><img src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/4078522738/original/r3OJY6wKPiKFyI73UnaA-IEno-eFi_jApw.png?1578611550" style="width: auto;" class="fr-fic fr-fil fr-dib" data-attachment="[object Object]" data-id="4078522738"></s></s></li>
+		</ol>
+	</li>
+	<li>Once the Pi reboots it will be ready to deploy or redeploy</li>
+	<li>Nice work! You did it!</li>
+</ol>
+
+<h2>Issues and Changes</h2>
+
+<p>Use the account `pi` and the password `ULTRAPi`.&nbsp;</p>
+
+<p>You should be able to use either the hostname of the pi or it&#39;s IP address to connect in to it. Except WiFi, that is IP address connections only.</p>
+
+<p>You can reconfigure a pi if it is deployed using the newest images regardless of where it is or what it&#39;s doing.&nbsp;</p>
+
+<p>You can check the file `Pi_Guest-List.txt` on the Pi Server to see which pis are syncing and when, as well as how they are doing so (hostname or IP address).&nbsp;</p>
+
+<p>Pis that utilize the chrome displayboard feature will not sync, nor ask to be synced.</p>

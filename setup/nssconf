@@ -1,0 +1,16 @@
+# /etc/nsswitch.conf
+
+passwd:         files winbind
+group:          files winbind
+shadow:         files winbind
+gshadow:        files
+
+hosts:          files mdns4_minimal [NOTFOUND=return] dns myhostname wins
+networks:       files
+
+protocols:      db files
+services:       db files
+ethers:         db files
+rpc:            db files
+
+netgroup:       nis

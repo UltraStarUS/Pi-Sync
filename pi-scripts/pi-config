@@ -1,0 +1,115 @@
+#/bin/bash!
+# ajaxx . delete-button
+## This file automates the majority of the pi setup process
+## Getting syncing configured, wireless settings configured, name and 
+## the LXDE-pi/autostart file configured
+echo "Please enter a hostname?"
+read name
+echo "Erase the '#' from the line that represents this Pi"
+echo "Once you delete the '#', press 'ctrl+o' + 'enter' then 'ctrl+x' + 'enter'"
+echo "Press enter to continue"
+read
+nano ~/.config/lxsession/LXDE-pi/autostart
+## We create the file, dump in what is currently being used except the last line
+## replace that line with our input
+## then replace the current file with our file (the one that has just now been modified)
+touch hosts
+head -n -1 /etc/hosts > hosts
+echo "127.0.1.1       $name" >> hosts
+sudo echo "$name" > /etc/hostname
+sudo mv hosts /etc/hosts
+## By determining whether or not the pi is going to be syncing and how it will be connecting to the pi
+## server we are able to then implement more specific settings and configurations which make the process
+## significantly more comprehensive
+echo "Type 1 if this Pi is Wifi, Type 2 if this Pi is Ethernet, Type 3 if this Pi is a Chrome Display Board"
+read wifi
+if [[ "$wifi" == "1" ]]; then
+	## Comments here, unless specified are reflected in the following `elif` section
+	touch /home/pi/.script/pi-wifi
+	## This creates the script from scratch, line by line 
+	## As the parameters are determined they are added in. This gives the most 
+	## versatility possible. 
+	echo "#/bin/bash!" > /home/pi/.script/pi-wifi
+	echo "IP=\$(hostname -I)" >> /home/pi/.script/pi-wifi
+	## Displays all possible folders for source selection
+	ssh -i  /home/pi/.ssh/.PiServer -T pi@192.168.240.239 "cd /samba/pi/pishare/; ls -RD | grep ./; exit;"
+	echo "Which source folder should this Pi use."
+	echo "Only type in the Letters and symbols between ./ and :"
+	read srcPath
+	echo "srcpath=$srcPath" >> /home/pi/.script/pi-wifi
+	## This is the actual syncing command. It uses ssh to send a command back to the server which in turn 
+	## syncs the requested data back to the pi.
+	echo "ssh -i /home/pi/.ssh/.PiServer -T pi@192.168.240.239 \"~/.script/Sync.sh \$IP \$srcpath\"" >> /home/pi/.script/pi-wifi
+	chmod +x /home/pi/.script/pi-wifi
+	## Changes the Networking configurations (This is different for ethernet only in the filenames and their 
+	##configurations)
+	sudo cp /etc/network/wificonfig.file /etc/network/interfaces
+	sudo cp /etc/modprobe.d/raspi-wifi.file /etc/modprobe.d/raspi-blacklist.conf
+	## This is the simpliest way to edit the crontab in script form, create a file using touch
+	## then add in all required points, throwing it into crontab for it to update. 
+	touch tmpcron
+	echo "*/10 * * * * \"/home/pi/Desktop/Periodically clean Wastebucket\"" >> tmpcron
+	echo "0 4 * * * #/home/pi/Desktop/Reboot.sh # JOB_ID_4" >> tmpcron
+	echo "@reboot rm -rf /home/pi/.config/chromium/Singleton*" >> tmpcron
+	echo "*/5 * * * * /home/pi/.script/pi-wifi" >> tmpcron
+	crontab tmpcron
+	rm tmpcron
+	echo "Syncing with PiServer"
+	## Runs the script that the above code created
+	/home/pi/.script/./pi-wifi
+elif [[ "$wifi" == "2" ]]; then	
+	touch /home/pi/.script/pi-ether
+	echo "#/bin/bash!" > /home/pi/.script/pi-ether
+	echo "IP=\$(hostname)" >> /home/pi/.script/pi-ether
+	ssh -i  /home/pi/.ssh/.PiServer -T pi@192.168.240.239 "cd /samba/pi/pishare/; ls -RD | grep ./; exit;"
+	echo "Which source folder should this Pi use."
+	echo "Only type in the Letters and symbols between ./ and :"
+	read srcPath
+	echo "srcpath=$srcPath" >> /home/pi/.script/pi-ether
+	echo "ssh -i /home/pi/.ssh/.PiServer -T pi@192.168.240.239 \"~/.script/Sync.sh \$IP \$srcpath\"" >> /home/pi/.script/pi-ether
+	chmod +x /home/pi/.script/pi-ether
+	sudo cp /etc/network/etherconfig.file /etc/network/interfaces
+	sudo cp /etc/modprobe.d/raspi-ether.file /etc/modprobe.d/raspi-blacklist.conf
+	touch tmpcron
+	echo "*/10 * * * * \"/home/pi/Desktop/Periodically clean Wastebucket\"" >> tmpcron
+	echo "0 4 * * * #/home/pi/Desktop/Reboot.sh # JOB_ID_4" >> tmpcron
+	echo "@reboot rm -rf /home/pi/.config/chromium/Singleton*" >> tmpcron
+	echo "*/5 * * * * /home/pi/.script/pi-ether" >> tmpcron
+	crontab tmpcron
+	rm tmpcron
+	echo "Syncing with PiServer"
+	/home/pi/.script/./pi-ether
+## When we are dealing with a chrome display board we don't have to do as much 
+## all we have to do is make sure that it is set to automatically start a chromium
+## instance
+elif [[ "$wifi" == "3" ]]; then 
+	echo "Skiping Sync Setup"
+	echo "Deleting all files in 'share' "
+	## Clears out the share directory to save on space in the event
+	## that the pi is reconfigured later.
+	rm -rf ~/share/*
+	echo "@/home/pi/.script/autochrome" >> ~/.config/lxsession/LXDE-pi/autostart
+	echo "Type 1 if this Pi is Wifi, Type 2 if this Pi is Ethernet"
+	read net
+	touch tmpcron
+	## carried over from the last pi versions
+	echo "*/10 * * * * \"/home/pi/Desktop/Periodically clean Wastebucket\"" >> tmpcron
+	echo "0 4 * * * #/home/pi/Desktop/Reboot.sh # JOB_ID_4" >> tmpcron
+	## had a popup error for chromium, this line seemed to solve the issue
+	echo "@reboot rm -rf /home/pi/.config/chromium/Singleton*" >> tmpcron
+	crontab tmpcron
+	rm tmpcron
+	## This fix was documented in Freshdesk/works prior to the new image's creation
+	## all this does is either eliminate wifi or ethernet. However, by doing it 
+	## in this way, we can reconfigure a pi without having to do a full reinstall	
+	if [[ "$net" == "1" ]]; then 
+		sudo cp /etc/network/wificonfig.file /etc/network/interfaces
+		sudo cp /etc/modprobe.d/raspi-wifi.file /etc/modprobe.d/raspi-blacklist.conf
+	elif [[ "$net" == "2" ]]; then 
+		sudo cp /etc/network/etherconfig.file /etc/network/interfaces
+		sudo cp /etc/modprobe.d/raspi-ether.file /etc/modprobe.d/raspi-blacklist.conf
+	fi
+fi	
+echo "Pi Done"
+echo "Rebooting Now!"
+#sudo shutdown -r now 
